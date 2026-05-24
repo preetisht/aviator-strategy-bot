@@ -1,0 +1,34 @@
+{
+  "manifest_version": 3,
+  "name": "Aviator Strategy Bot",
+  "version": "1.0.0",
+  "description": "Adaptive quant strategy bot for Aviator with Kelly sizing and EV-based decisions",
+  "permissions": [
+    "storage",
+    "activeTab",
+    "scripting"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["strategy.js", "strategies.js", "stats.js", "content.js", "panel.js"],
+      "css": ["panel.css"],
+      "run_at": "document_idle"
+    }
+  ],
+  "action": {
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+}
