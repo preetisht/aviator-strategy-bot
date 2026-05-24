@@ -1,8 +1,15 @@
 // Aviator Quant Bot — reads crash multipliers, runs adaptive strategy
 // Supports both simulation mode and REAL betting with human-like interaction
-// Depends on: window.AviatorStrategy, window.AviatorStats
+// Depends on: window.AviatorStrategy, window.AviatorStats, window.AviatorLicense
 
 (() => {
+  // Initialize license on load
+  if (window.AviatorLicense) {
+    window.AviatorLicense.initialize().then((result) => {
+      console.log(`[AviatorBot][LICENSE] Init: tier=${result.tier || "free"}, valid=${result.valid}`);
+    });
+  }
+
   let session = null;
   let botRunning = false;
   let skippedInARow = 0;
@@ -1048,6 +1055,30 @@
           notifyPanel("alert", { message: "Set a starting bankroll first!" });
           return;
         }
+
+        // License gate: validate before starting
+        if (window.AviatorLicense) {
+          const license = window.AviatorLicense;
+          if (!session.simulationMode && !license.isRealBettingAllowed()) {
+            notifyPanel("alert", { message: "Real betting requires Basic or Pro subscription. Upgrade at aviator-bot.pages.dev" });
+            return;
+          }
+          if (session.autopilot && !license.isAutopilotAllowed()) {
+            notifyPanel("alert", { message: "Autopilot requires Pro subscription." });
+            return;
+          }
+          if (!license.isStrategyAllowed(session.activeStrategy)) {
+            notifyPanel("alert", { message: `Strategy "${session.activeStrategy}" requires a higher tier. Current: ${license.getTier()}` });
+            return;
+          }
+          // Enforce max rounds
+          const maxAllowed = license.getMaxRounds();
+          if (maxAllowed !== Infinity && session.maxRounds > maxAllowed) {
+            session.maxRounds = maxAllowed;
+            notifyPanel("log", { message: `Max rounds capped to ${maxAllowed} for ${license.getTier()} tier` });
+          }
+        }
+
         session.botStatus = "RUNNING";
         session.peakBankroll = session.peakBankroll || session.currentBankroll;
         botRunning = true;
