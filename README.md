@@ -1,8 +1,25 @@
 # Aviator Quant Bot — Chrome Extension
 
+> **Let's be real:** Gambling is mathematically designed to make you lose. The house edge in Aviator is ~3%. Over time, you WILL lose money. No bot, no strategy, no signal group can change that.
+>
+> **So why does this exist?** Because if you're going to play anyway, you should at least play with discipline, math, and a stop-loss — not with emotions, gut feelings, and "one more round" at 3 AM. This bot replaces your worst enemy (yourself at the table) with cold, calculated decisions.
+>
+> **Think of it like this:** A helmet doesn't prevent accidents. But it keeps your skull intact when one happens. This bot is your helmet.
+
+---
+
 Adaptive, probability-based strategy bot for the Aviator game (by Spribe). Uses quantitative trading principles — Kelly Criterion sizing, expected value filtering, volatility guards, and streak detection — to make mathematically honest betting decisions.
 
 **This is NOT prediction. It is adaptive risk management based on live session data.**
+
+### The Hard Truth
+
+- You will NOT get rich using this bot
+- The house always has a 3% edge — no strategy eliminates that
+- This bot maximizes your chance of hitting a **short-term target** and then **stopping**
+- If you're gambling money you can't afford to lose, **close this page and call a helpline**
+
+**Gambling Helpline (India):** 1800-599-0019 | **International:** https://www.gamblersanonymous.org
 
 ## Install
 
